@@ -17,13 +17,21 @@ function newMessage(msg, cls) {
   box.appendChild(li)
 }
 
+function send() {
+  if (input.value.length > 0) {
+    newMessage(input.value, 'me')
+    socket.emit('message', input.value);
+    input.value = ""
+  }
+}
+
+document.querySelector('.send').addEventListener('click', () => {
+  send()
+})
+
 input.addEventListener('keydown', (e) => {
   if (e.key === 'Enter') {
-    if (input.value.length > 0) {
-      newMessage(input.value, 'me')
-      socket.emit('message', input.value);
-      input.value = ""
-    }
+    send()
   }
 })
 
