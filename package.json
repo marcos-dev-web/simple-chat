@@ -4,12 +4,8 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-<<<<<<< HEAD
-    "start": "node main.js"
-=======
     "start": "node main.js",
     "dev": "nodemon main.js"
->>>>>>> feature/message
   },
   "keywords": [],
   "author": "",

@@ -8,12 +8,16 @@ const io = socket(server)
 
 app.use(express.static('public'))
 
+
 io.on('connection', (socket) => {
-  console.log('[*] user connected');
-  console.log(socket.id)
-  socket.on('message', (value) => {
-    socket.broadcast.emit('new_message', value)
+  console.log('[*] user connected: '+socket.id);
+  
+  socket.on('message', (msg, time) => {
+    socket.broadcast.emit('new_message', msg, time)
   })
+
+
+
   socket.on('disconnect', () => {
     console.log('[*] user disconnected')
   })

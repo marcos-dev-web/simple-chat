@@ -4,17 +4,33 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>chat</title>
+    <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
   </head>
   <body>
-    <ul class="box_message">
+    <main class="wrapper">
+      <section class="messages">
+        <ul class="box_message">
+        </ul>
+      </section>
+  
+      <section class="msg_box">
+        <input type="text" name="value" id="input_text" placeholder="Write here" />
+        <button class="send">Send</button>
+      </section>  
+    </main>
 
-    </ul>
-    <div class="msg_box">
-      <input type="text" name="value" id="" />
-      <button class="send">Send</button>
-    </div>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.1/socket.io.js"></script>
     <script src="./js/main.js"></script>
+
+    <script>
+      window.addEventListener("load", () => {
+        document.querySelector('input[type="text"]').focus();
+      });
+      window.addEventListener("click", () => {
+        document.querySelector('input[type="text"]').focus();
+      });
+
+    </script>
   </body>
 </html>
