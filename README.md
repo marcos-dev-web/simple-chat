@@ -17,7 +17,7 @@ simple chat with socket io
 
 ## usage
 to do your login
-access [https://chatblack.herokuapp.com](login-page)
+access https://chatblack.herokuapp.com
 
 the login is simple,
 you need only of a name
