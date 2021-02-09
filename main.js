@@ -24,8 +24,8 @@ global.users = [];
 io.on("connection", (sock) => {
   console.log("[*] user connected: " + sock.id);
 
-  sock.on("message", (msg, time) => {
-    sock.broadcast.emit("new_message", msg, time);
+  sock.on("message", (msg, time, name) => {
+    sock.broadcast.emit("new_message", msg, time, name);
   });
 
   sock.on("disconnect", () => {

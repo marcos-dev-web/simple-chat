@@ -7,7 +7,6 @@ router.get("/", verifyCookies, (req, res) => {
 });
 
 router.get("/login", (req, res) => {
-  console.log("login");
   if (!req.cookies["token-name"]) {
     res.sendFile(path.resolve("public", "login", "login.html"));
   } else {
@@ -36,10 +35,10 @@ router.get("/logout", (req, res) => {
     let user = users[key];
     if (user == name) {
       global.users.splice(key, key + 1);
-      res.clearCookie("token-name");
-      res.redirect("/login");
     }
   }
+  res.clearCookie("token-name");
+  res.redirect('/login')
 });
 
 module.exports = router;

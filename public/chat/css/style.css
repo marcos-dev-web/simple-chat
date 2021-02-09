@@ -4,7 +4,9 @@
 }
 
 header.name_user {
+  margin: 0 auto;
   width: 100%;
+  max-width: 1300px;
   border-bottom: 1px solid springgreen;
   background-color: black;
   height: var(--height-header);
@@ -43,6 +45,7 @@ body {
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
+  margin: 0 auto;
 }
 
 input[type="text"] {
@@ -71,11 +74,20 @@ input[type="text"] {
   font-size: 20px;
 }
 
+#input_text::placeholder {
+  font-size: 20px;
+}
+
 .box_message {
   list-style: none;
   width: 100%;
   max-height: calc(100vh - var(--height-header) - var(--height-msg));
   overflow: auto;
+}
+
+.name_indentifier {
+  font-family: monospace;
+  color: rgb(230, 92, 0);
 }
 
 .msg {
@@ -87,6 +99,13 @@ input[type="text"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.content_box_message {
+  display: flex;
+  justify-content: space-between;
+  flex: 1;
+  padding-left: 10px;
 }
 
 .msg_text {
@@ -134,3 +153,5 @@ input[type="text"] {
     font-weight: normal;
   }
 }
+
+

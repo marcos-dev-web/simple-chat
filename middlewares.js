@@ -13,7 +13,7 @@ const verify = (name) => {
 
 const verifyCookies = (req, res, next) => {
   const name = req.cookies["token-name"];
-  if (name && verify(name)) {
+  if (name) {
     next();
   } else {
     res.redirect("/login");

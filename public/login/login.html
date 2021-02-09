@@ -5,13 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="stylesheet" href="./css/reset.css" />
+  <link rel="stylesheet" href="./css/main.css" />
 </head>
 <body>
-  <main class="wrapper">
-    <form action="/login/verifylogin" method="post">
-      <input type="text" name="name" id="name" class="name" placeholder="name" />
-      <input type="submit" value="Login">
-    </form>
-  </main>
+  <h1 class="title">Login</h1>
+  <form action="/login/verifylogin" method="post">
+    <input type="text" name="name" id="name" class="name" placeholder="name" />
+    <input type="submit" value="Login" class="submit">
+  </form>
+  <script src="./js/main.js"></script>
 </body>
 </html>
