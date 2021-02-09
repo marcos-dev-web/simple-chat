@@ -71,4 +71,11 @@ form {
   font-size: 40px;
   color: rgb(245, 57, 0);
   font-family: monospace;
+  text-align: center;
+}
+
+@media screen and (max-width: 390px) {
+  form {
+    width: 90%;
+  }
 }

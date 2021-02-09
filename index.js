@@ -13,7 +13,7 @@ const io = socket(server);
 app.disable("x-powered-by");
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.set("views", path.resolve("public", "chat"));
 app.use(express.static(path.resolve("public")));

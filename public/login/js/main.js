@@ -33,7 +33,20 @@ const verify = (event) => {
     return;
   }
 
-  form.submit();
+  let xhr = new XMLHttpRequest();
+  xhr.open('POST', 'verifylogin');
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.onload = () => {
+    let response = JSON.parse(xhr.responseText);
+    if (response['msg'] === 'ok') {
+      form.submit()
+    } else {
+      alertMsg(response['msg'])
+    }
+  }
+  xhr.send(JSON.stringify({
+    name: name
+  }))
 }
 
 form.addEventListener('submit', verify);

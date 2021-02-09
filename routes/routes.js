@@ -16,14 +16,24 @@ router.get("/login", (req, res) => {
 
 router.post("/login/verifylogin", (req, res) => {
   const { name } = req.body;
+  console.log(name)
   if (!verify(name)) {
-    global.users.push(name);
-    res.cookie("token-name", name);
-    res.redirect("/");
+    res.send({
+      msg: 'ok'
+    });
   } else {
-    res.redirect("/login");
+    res.send({
+      msg: 'user already exist!'
+    });
   }
 });
+
+router.post('/login/makelogin', (req, res) => {
+  const { name } = req.body;
+  global.users.push(name);
+  res.cookie("token-name", name);
+  res.redirect('/')
+})
 
 router.get("/logout", (req, res) => {
   let users = global.users;
