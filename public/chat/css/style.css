@@ -110,6 +110,7 @@ input[type="text"] {
 
 .msg_text {
   width: calc(100% - 60px);
+  word-break: break-all;
 }
 
 .hour {
