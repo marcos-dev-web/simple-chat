@@ -16,7 +16,6 @@ router.get("/login", (req, res) => {
 
 router.post("/login/verifylogin", (req, res) => {
   const { name } = req.body;
-  console.log(name)
   if (!verify(name)) {
     res.send({
       msg: 'ok'
