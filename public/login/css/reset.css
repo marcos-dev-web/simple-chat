@@ -1,0 +1,35 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: Ubuntu, sans-serif;
+}
+
+::selection {
+  background-color: rgb(13, 197, 13);
+  color: white;
+}
+
+::-webkit-scrollbar {
+  background: rgb(0, 136, 129);
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-corner {
+  background-color: rgb(61, 207, 151);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(61, 207, 151);
+}
+
+html,
+body {
+  scroll-behavior: smooth;
+  height: 100%;
+}
+
+body {
+  background-color: #001;
+}

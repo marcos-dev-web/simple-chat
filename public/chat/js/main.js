@@ -16,14 +16,14 @@ function newTime() {
   return `${tratHour(hours)}:${tratHour(minutes)}`;
 }
 
-function newMessage(msg, cls, time, bg=undefined) {
+function newMessage(msg, cls, time, bg = undefined) {
   let li = document.createElement("li");
   let span = document.createElement("span");
   let p = document.createElement("p");
   if (bg) {
     li.style.backgroundColor = bg;
   }
-  
+
   span.classList.add("hour");
   span.textContent = time;
 
@@ -37,7 +37,7 @@ function newMessage(msg, cls, time, bg=undefined) {
   box.scroll(0, box.scrollHeight);
 }
 
-function send(bg=undefined) {
+function send(bg = undefined) {
   if (input.value.length > 0) {
     const time = newTime();
     const valueMessage = input.value;

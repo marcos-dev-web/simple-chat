@@ -1,17 +1,48 @@
+:root {
+  --height-header: 30px;
+  --height-msg: 80px;
+}
+
+header.name_user {
+  width: 100%;
+  border-bottom: 1px solid springgreen;
+  background-color: black;
+  height: var(--height-header);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 5px;
+}
+
+.name_user h4 {
+  color: rgb(0, 255, 255);
+}
+
+.name_user a {
+  color: rgb(30, 255, 0);
+  text-decoration: none;
+}
+
+.name_user a:hover {
+  color: rgb(255, 152, 68);
+}
+
 body {
   background-color: #001;
   color: white;
   display: flex;
+  flex-direction: column;
   align-items: flex-start;
-  justify-content: center;
+  justify-content: space-between;
+  max-height: 100vh;
 }
 
 .wrapper {
   max-width: 1300px;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  flex: 1;
 }
 
 input[type="text"] {
@@ -32,7 +63,7 @@ input[type="text"] {
   justify-content: space-between;
   align-items: flex-end;
   padding: 0 5px;
-  height: 80px;
+  height: var(--height-msg);
   overflow: hidden;
 }
 
@@ -43,7 +74,7 @@ input[type="text"] {
 .box_message {
   list-style: none;
   width: 100%;
-  max-height: calc(100vh - 80px);
+  max-height: calc(100vh - var(--height-header) - var(--height-msg));
   overflow: auto;
 }
 
