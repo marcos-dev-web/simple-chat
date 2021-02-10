@@ -1,20 +1,23 @@
 const express = require("express");
 const bodyParser = require("body-parser");
-const helmet = require('helmet');
+const helmet = require("helmet");
 const http = require("http");
 const socket = require("socket.io");
 const cookieParser = require("cookie-parser");
 const path = require("path");
 
-const { notFound } = require('./middlewares');
+const { notFound, notErros } = require("./middlewares");
 
 const app = express();
 
 const server = http.createServer(app);
 const io = socket(server);
 
+app.use(helmet.hidePoweredBy());
+app.use(helmet.noSniff());
+app.use(helmet.xssFilter());
+app.use(helmet.referrerPolicy());
 
-app.use(helmet())
 app.disable("x-powered-by");
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -23,7 +26,8 @@ app.set("view engine", "ejs");
 app.set("views", path.resolve("public"));
 app.use(express.static(path.resolve("public")));
 app.use(require("./routes/routes.js"));
-app.use(notFound)
+app.use(notFound);
+app.use(notErros);
 
 global.users = [];
 
