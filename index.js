@@ -31,6 +31,8 @@ app.use(notErros);
 
 global.users = [];
 
+const users_id = {}
+
 io.on("connection", (sock) => {
   console.log("[*] user connected: " + sock.id);
 
@@ -39,9 +41,18 @@ io.on("connection", (sock) => {
   });
 
   sock.on("disconnect", () => {
-    console.log("[*] user disconnected");
+    console.log(`[*] user [${users_id[sock.id]}] disconnected`);
+    sock.broadcast.emit('user_disconnected', users_id[sock.id]);
+    delete users_id[sock.id]
   });
+
+  sock.on('my_name', (name) =>  {
+    sock.broadcast.emit('new_user', name);
+    users_id[sock.id] = name;
+  })
+
 });
+
 
 const PORT = process.env.PORT || 3000;
 

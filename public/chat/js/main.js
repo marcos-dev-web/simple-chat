@@ -85,3 +85,40 @@ socket.on("new_message", (msg, time, name) => {
   nmsg++;
   document.title = `Chat - (${nmsg})`;
 });
+
+function alertNewUser(name, logout=false) {
+  let msg = ''
+
+  let spanContainer = document.createElement('span');
+  let pMsg = document.createElement('p');
+
+  spanContainer.classList.add('new_user_container');
+  pMsg.classList.add('msg_new_user');
+  if (logout) {
+    msg = `user <b>[${name}]</b> disconneted from chat`;
+  } else {
+    msg = `user <b>[${name}]</b> join in the chat!`;
+  }
+  pMsg.innerHTML = msg
+
+  spanContainer.appendChild(pMsg);
+  
+  document.body.appendChild(spanContainer);
+
+  setTimeout(() => {
+    document.body.removeChild(document.querySelector('.new_user_container'));
+  }, 3000)
+}
+
+socket.on('connect', (sock) => {
+  let name = document.cookie.split('=')[1]
+  socket.emit('my_name', name)
+})
+
+socket.on('new_user', (name) => {
+  alertNewUser(name, logout=false)
+})
+
+socket.on('user_disconnected', (name) => {
+  alertNewUser(name, logout=true)
+})
