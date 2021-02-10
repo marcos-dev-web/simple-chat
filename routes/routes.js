@@ -3,7 +3,7 @@ const path = require("path");
 const { verifyCookies, verify } = require("../middlewares.js");
 
 router.get("/", verifyCookies, (req, res) => {
-  res.render("index", { name: req.cookies["token-name"] });
+  res.render("chat/index", { name: req.cookies["token-name"] });
 });
 
 router.get("/login", (req, res) => {

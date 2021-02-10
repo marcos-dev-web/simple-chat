@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - Not Found</title>
+  <style>
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      height: 100%;
+      width: 100%;
+    }
+
+    body {
+      background-color: #001;
+      color: springgreen;
+      font-family: monospace;
+    }
+/*
+    .title,
+    .url {
+      display: inline-block;
+    }*/
+
+    .title.status {
+      padding: 10px 0;
+      background-color: #001;
+      color: white;
+      font-size: 80px;
+    }
+
+    .title {
+      font-size: 70px;
+      background: #1d5631;
+      font-family: monospace;
+      padding: 30px 0;
+    }
+
+    .url {
+      color: rgb(255, 94, 0);
+      font-size: 25px;
+      font-family: sans-serif;
+      padding-top: 40px;
+    }
+
+    .center {
+      text-align: center;
+      display: inline-block;
+      width: 100%;
+    }
+    .back {
+      position: absolute;
+      left: 10px;
+      top: 10px;
+      font-family: monospace;
+      background: #ff5e00;
+      color: white;
+      font-size: 18px;
+      text-decoration: none;
+      border-radius: 10px;
+      padding: 10px 5px;
+      transition: all 150ms linear;
+    }
+
+    .back:hover {
+      background-color: #ff5e00ce;
+    }
+    .back:active {
+      background-color: #51ff00;
+    }
+    @media screen and (max-width: 400px) {
+      .title.not_found {
+        font-size: 40px;
+      }
+    }
+    @media screen and (max-width: 590px) {
+      .back {
+        top: auto;
+        bottom: 10px;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    }
+
+    @media screen and (max-width: 590px) and (max-height: 390px) {
+      .back {
+        left: 10px;
+        transform: none;
+      }
+    }
+    @media screen and (max-width: 590px) and (max-height: 320px) {
+      .back {
+        top: 10px;
+        left: 10px;
+        transform: none;
+        bottom: auto;
+      }
+    }
+    </style>
+</head>
+<body>
+  <a href="/" class="back">Back to home</a>
+  <div class="center">
+    <div class="title_div">
+      <h1 class="status title">404</h1>
+      <h1 class="title not_found">Not Found</h1>
+    </div>
+    <h4 class="url"><%= url %></h4>
+  </div>
+</body>
+</html>

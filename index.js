@@ -1,23 +1,29 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const helmet = require('helmet');
 const http = require("http");
 const socket = require("socket.io");
 const cookieParser = require("cookie-parser");
 const path = require("path");
+
+const { notFound } = require('./middlewares');
 
 const app = express();
 
 const server = http.createServer(app);
 const io = socket(server);
 
+
+app.use(helmet())
 app.disable("x-powered-by");
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
-app.set("views", path.resolve("public", "chat"));
+app.set("views", path.resolve("public"));
 app.use(express.static(path.resolve("public")));
 app.use(require("./routes/routes.js"));
+app.use(notFound)
 
 global.users = [];
 
