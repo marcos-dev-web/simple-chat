@@ -4,6 +4,18 @@ var nmsg = 0;
 
 let input = document.querySelector('input[type="text"]');
 
+function getCookieName() {
+  const cookies = document.cookie;
+  let t1 = cookies.split(' ');
+  let t2 = t1.map(item => item.split('='));
+  let name = t2.find(item => item[0] === 'token-name')[1];
+  return name;
+}
+
+function setTitle(title="Chat") {
+  document.title = title;
+}
+
 function tratHour(value) {
   return value < 10 ? `0${value}` : value;
 }
@@ -16,58 +28,89 @@ function newTime() {
   return `${tratHour(hours)}:${tratHour(minutes)}`;
 }
 
-function newMessage(msg, cls, time, name, fg = undefined) {
-  let li = document.createElement("li"); //box message
+const message = {
+  create(msg, cls, time, name, fg = undefined) {
+    const boxMain = document.createElement("li");
+    const leftContainer = document.createElement('div');
+    const rightContainer = document.createElement('div');
+    const spanHour = document.createElement("span");
+    const contentMessage = document.createElement("p");
+    const spanNameId = document.createElement('span');
 
-  let divUserId = document.createElement('div'); //box left
-  let divContentBoxMessage = document.createElement('div'); // box right
+    leftContainer.classList.add('user_name_id');
+    rightContainer.classList.add('content_box_message');
+    spanNameId.classList.add('name_indentifier');
+    spanHour.classList.add("hour");
+    boxMain.classList.add("msg");
+    contentMessage.classList.add("msg_text");
 
-  let spanNameId = document.createElement('span'); // span name to box left
+    if (fg) {
+      spanNameId.style.color = fg;
+    }
 
-  divUserId.classList.add('user_name_id');
-  divContentBoxMessage.classList.add('content_box_message');
-  spanNameId.classList.add('name_indentifier');
+    spanNameId.textContent = name;
+    spanHour.textContent = time;
+    contentMessage.textContent = msg;
 
-  spanNameId.textContent = name;
-  divUserId.appendChild(spanNameId); //done box left
+    leftContainer.appendChild(spanNameId);
+    boxMain.classList.add(cls);
+    rightContainer.appendChild(contentMessage)
+    rightContainer.appendChild(spanHour)
+    boxMain.appendChild(leftContainer);
+    boxMain.appendChild(rightContainer);
 
-
-  let span = document.createElement("span");
-  let p = document.createElement("p");
-  if (fg) {
-    spanNameId.style.color = fg;
+    return boxMain;
+  },
+  render(containerMessage) {
+    box.appendChild(containerMessage);
+    let scrollHeight = box.scrollHeight
+    box.scroll(0, scrollHeight);
   }
-
-  span.classList.add("hour");
-  span.textContent = time;
-
-  li.classList.add("msg");
-  li.classList.add(cls);
-  p.classList.add("msg_text");
-  p.textContent = msg;
-
-  divContentBoxMessage.appendChild(p)
-  divContentBoxMessage.appendChild(span)
-
-  li.appendChild(divUserId);
-  li.appendChild(divContentBoxMessage);
-  box.appendChild(li);
-  box.scroll(0, box.scrollHeight);
 }
 
 function send() {
   if (input.value.length > 0) {
-    let name = document.querySelector('#user_name_field').textContent;
-
+    const name = document.querySelector('#user_name_field').textContent;
     const time = newTime();
     const valueMessage = input.value;
-    newMessage(valueMessage, "me", time, 'me', 'springgreen');
-    socket.emit("message", valueMessage, time, name);
+
+    let messageDiv = message.create(valueMessage, "me", time, 'me', 'springgreen');
+    message.render(messageDiv);
+
     input.value = "";
-    document.title = "Chat";
+    socket.emit("message", valueMessage, time, name);
+    setTitle()
     nmsg = 0;
-    box.scroll(0, box.scrollHeight);
   }
+}
+
+function alertNewUser(name, logout=false) {
+  let spanContainer = document.createElement('span');
+  let textMsg = document.createElement('p');
+
+  spanContainer.classList.add('new_user_container');
+  textMsg.classList.add('msg_new_user');
+
+  if (logout) {
+    if (name.indexOf('<') === -1 && name.indexOf('>') === -1) {
+      textMsg.innerHTML = `user <b>[${name}]</b> disconected from chat`;
+    } else {
+      return
+    }
+  } else {
+    if (name.indexOf('<') === -1 && name.indexOf('>') === -1) {
+      textMsg.innerHTML = `user <b>[${name}]</b> join in the chat`;
+    } else {
+      return
+    }
+  }
+
+  spanContainer.appendChild(textMsg);
+  document.body.appendChild(spanContainer);
+
+  setTimeout(() => {
+    document.body.removeChild(document.querySelector('.new_user_container'));
+  }, 3000)
 }
 
 document.querySelector(".send").addEventListener("click", () => {
@@ -80,44 +123,23 @@ input.addEventListener("keydown", (e) => {
   }
 });
 
-socket.on("new_message", (msg, time, name) => {
-  newMessage(msg, "he", time, name);
-  nmsg++;
-  document.title = `Chat - (${nmsg})`;
-});
-
-function alertNewUser(name, logout=false) {
-  let msg = ''
-
-  let spanContainer = document.createElement('span');
-  let pMsg = document.createElement('p');
-
-  spanContainer.classList.add('new_user_container');
-  pMsg.classList.add('msg_new_user');
-  if (logout) {
-    msg = `user <b>[${name}]</b> disconneted from chat`;
-  } else {
-    msg = `user <b>[${name}]</b> join in the chat!`;
-  }
-  pMsg.innerHTML = msg
-
-  spanContainer.appendChild(pMsg);
-  
-  document.body.appendChild(spanContainer);
-
-  setTimeout(() => {
-    document.body.removeChild(document.querySelector('.new_user_container'));
-  }, 3000)
-}
-
-socket.on('connect', (sock) => {
-  let name = document.cookie.split('=')[1]
+socket.on('connect', () => {
+  let name = getCookieName();
   socket.emit('my_name', name)
 })
 
 socket.on('new_user', (name) => {
-  alertNewUser(name, logout=false)
+  alertNewUser(name)
 })
+
+socket.on("new_message", (msg, time, name) => {
+  let divMessage = message.create(msg, "he", time, name);
+  message.render(divMessage);
+  nmsg++;
+  if (!document.hasFocus()) {
+    setTitle(`(${nmsg}) Chat`);
+  }
+});
 
 socket.on('user_disconnected', (name) => {
   alertNewUser(name, logout=true)
